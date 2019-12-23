@@ -1,0 +1,18 @@
+name: one_time_pad
+description: An implementation of the one-time pad system.
+version: 1.0.0
+repository: https://github.com/ernestoittig/one_time_pad
+
+environment:
+  sdk: '>=2.6.0 <3.0.0'
+
+dependencies:
+  args: ^1.5.2
+
+dev_dependencies:
+  effective_dart: ^1.1.0
+  test: ^1.6.0
+
+executables:
+  one_time_pad:
+  otp: one_time_pad
