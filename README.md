@@ -13,4 +13,4 @@ pub global activate -s path .
 otp help
 ```
 
-More info at [HELP.md](HELP.md)
+More info at [HELP.md](https://github.com/ernestoittig/one_time_pad/blob/master/HELP.md)
