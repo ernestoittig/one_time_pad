@@ -1,6 +1,6 @@
 name: one_time_pad
 description: An implementation of the one-time pad system.
-version: 1.0.0+1
+version: 1.0.1
 repository: https://github.com/ernestoittig/one_time_pad
 
 environment:
