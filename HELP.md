@@ -11,7 +11,6 @@ Available commands:
   decrypt    Decrypt an encrypted message using an existing one-time pad.
   encrypt    Encrypt a provided message with an existing one-time pad or generate a new one.
   generate   Generates new one-time pad of fixed length
-  help       Display help information for otp.
 
 Run "otp help <command>" for more information about a command.
 ```
