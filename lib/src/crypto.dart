@@ -14,19 +14,19 @@ class OtpEncoder extends Converter<String, String> {
   OtpEncoder.fromList(List<int> otp) : _otp = Uint8List.fromList(otp);
   @override
   String convert(String input) {
-    var retval = '';
+    var returnVal = '';
     for (var i = 0; i < input.length; ++i) {
       if (input[i].isAlpha) {
         var magicNumber =
             input[i].isLowerCaseAlpha ? 'a'.codeUnitAt(0) : 'A'.codeUnitAt(0);
         var currentIndex = input.codeUnitAt(i) - magicNumber;
-        retval +=
+        returnVal +=
             String.fromCharCode((currentIndex + _otp[i]) % 26 + magicNumber);
       } else {
-        retval += input[i];
+        returnVal += input[i];
       }
     }
-    return retval;
+    return returnVal;
   }
 
   @override
@@ -39,26 +39,26 @@ class OtpEncoder extends Converter<String, String> {
 class OtpDecoder extends Converter<String, String> {
   final Uint8List _otp;
 
-  /// Create a tranformer using [otp]
+  /// Create a transformer using [otp]
   OtpDecoder(Uint8List otp) : _otp = otp;
 
   /// Create a transformer from list [otp]
   OtpDecoder.fromList(List<int> otp) : _otp = Uint8List.fromList(otp);
   @override
   String convert(String input) {
-    var retval = '';
+    var returnValue = '';
     for (var i = 0; i < input.length; ++i) {
       if (input[i].isAlpha) {
         var magicNumber =
             input[i].isLowerCaseAlpha ? 'a'.codeUnitAt(0) : 'A'.codeUnitAt(0);
         var currentIndex = input.codeUnitAt(i) - magicNumber;
-        retval +=
+        returnValue +=
             String.fromCharCode((currentIndex - _otp[i]) % 26 + magicNumber);
       } else {
-        retval += input[i];
+        returnValue += input[i];
       }
     }
-    return retval;
+    return returnValue;
   }
 
   @override

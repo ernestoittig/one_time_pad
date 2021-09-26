@@ -29,7 +29,7 @@ class EncryptCommand extends Command {
       ..addFlag('generate-otp',
           abbr: 'g',
           help:
-              'If specified, will overrite the file specified in --opt-file with a newly-generated one, disabled by default');
+              'If specified, will overwrite the file specified in --opt-file with a newly-generated one, disabled by default');
   }
 
   void run() async {
