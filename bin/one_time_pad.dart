@@ -15,7 +15,7 @@ void main(List<String> args) async {
     stderr.writeln(e);
     exit(64);
   } on FileSystemException catch (e) {
-    // Remove the FileSystemException at the begining so it looks nicer :)
+    // Remove the FileSystemException at the beginning so it looks nicer :)
     stderr.writeln('$e'.replaceFirst('FileSystemException: ', ''));
     exit(66);
   }
