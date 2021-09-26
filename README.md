@@ -9,7 +9,7 @@ dart bin/one_time_pad.dart help
 
 To install globally:
 ```sh
-pub global activate -s path .
+dart pub global activate -s path .
 otp help
 ```
 
