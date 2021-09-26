@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:one_time_pad/one_time_pad.dart';
+import 'package:test/test.dart';
 
 void main() {
   test("generateOneTimePad() generates an otp of given size", () {

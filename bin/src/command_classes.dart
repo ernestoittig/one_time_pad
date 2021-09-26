@@ -13,7 +13,7 @@ class EncryptCommand extends Command {
           "Encrypt a provided message with an existing one-time pad or generate a new one.";
 
   String get invocation =>
-      '${runner.executableName} $name [options] [file | -]';
+      '${runner?.executableName ?? 'one_time_pad'} $name [options] [file | -]';
 
   EncryptCommand() {
     argParser
@@ -33,20 +33,22 @@ class EncryptCommand extends Command {
   }
 
   void run() async {
-    if (argResults['otp-file'] == null) {
+    // Note that we know argResults != null here
+    // as argResults is populated just before Command.run is called
+    if (argResults!['otp-file'] == null) {
       usageException('One-time pad file not specified.');
     }
-    var otpFile = File(argResults['otp-file']);
+    var otpFile = File(argResults!['otp-file']);
 
     Uint8List input;
-    if (argResults.rest.isEmpty || argResults.rest[0] == '-') {
+    if (argResults!.rest.isEmpty || argResults!.rest[0] == '-') {
       var inputList = await stdin.reduce((a, b) => a + b);
       input = Uint8List.fromList(inputList);
     } else {
-      input = File(argResults.rest[0]).readAsBytesSync();
+      input = File(argResults!.rest[0]).readAsBytesSync();
     }
     Uint8List otp;
-    if (argResults['generate-otp']) {
+    if (argResults!['generate-otp']) {
       otp = generateOneTimePad(input.length);
       otpFile.writeAsBytesSync(otp);
     } else {
@@ -59,10 +61,10 @@ class EncryptCommand extends Command {
     } on RangeError {
       usageException('OTP length less than message length.');
     }
-    if (argResults['output'] == null) {
+    if (argResults!['output'] == null) {
       stdout.write(output);
     } else {
-      File(argResults['output']).writeAsStringSync(output);
+      File(argResults!['output']).writeAsStringSync(output);
     }
   }
 }
@@ -73,7 +75,7 @@ class DecryptCommand extends Command {
       summary = 'Decrypt an encrypted message using an existing one-time pad.';
 
   String get invocation =>
-      '${runner.executableName} $name [options] [file | -]';
+      '${runner?.executableName ?? 'one_time_pad'} $name [options] [file | -]';
 
   DecryptCommand() {
     argParser
@@ -89,17 +91,17 @@ class DecryptCommand extends Command {
   }
 
   void run() async {
-    if (argResults['otp-file'] == null) {
+    if (argResults!['otp-file'] == null) {
       usageException('One-time pad file not specified.');
     }
-    var otpFile = File(argResults['otp-file']);
+    var otpFile = File(argResults!['otp-file']);
 
     Uint8List input;
-    if (argResults.rest.isEmpty || argResults.rest[0] == '-') {
+    if (argResults!.rest.isEmpty || argResults!.rest[0] == '-') {
       var inputList = await stdin.reduce((a, b) => a + b);
       input = Uint8List.fromList(inputList);
     } else {
-      input = File(argResults.rest[0]).readAsBytesSync();
+      input = File(argResults!.rest[0]).readAsBytesSync();
     }
     Uint8List otp;
 
@@ -111,10 +113,10 @@ class DecryptCommand extends Command {
     } on RangeError {
       usageException('OTP length less than message length.');
     }
-    if (argResults['output'] == null) {
+    if (argResults!['output'] == null) {
       stdout.write(output);
     } else {
-      File(argResults['output']).writeAsStringSync(output);
+      File(argResults!['output']).writeAsStringSync(output);
     }
   }
 }
@@ -125,7 +127,7 @@ class GenerateCommand extends Command {
       summary = 'Generates new one-time pad of fixed length';
 
   String get invocation =>
-      '${runner.executableName} $name -l|--length=<INT> [out_file | -]';
+      '${runner?.executableName ?? 'one_time_pad'} $name -l|--length=<INT> [out_file | -]';
 
   GenerateCommand() {
     argParser.addOption('length',
@@ -136,16 +138,18 @@ class GenerateCommand extends Command {
   }
 
   void run() {
-    if (argResults['length'] == null) usageException('Length not specified.');
-    var length = int.tryParse(argResults['length']);
-    if (length == null) usageException('Length specified is an invalid integer.');
+    if (argResults!['length'] == null) usageException('Length not specified.');
+    var length = int.tryParse(argResults!['length']);
+    if (length == null) {
+      usageException('Length specified is an invalid integer.');
+    }
     var output = generateOneTimePad(length);
-    if (argResults.rest.isEmpty || argResults.rest[0] == '-') {
+    if (argResults!.rest.isEmpty || argResults!.rest[0] == '-') {
       for (var x in output) {
         stdout.writeCharCode(x);
       }
     } else {
-      File(argResults.rest[0]).writeAsBytesSync(output);
+      File(argResults!.rest[0]).writeAsBytesSync(output);
     }
   }
 }

@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import '../one_time_pad.dart';
+
 import './extensions.dart';
+import '../one_time_pad.dart';
 
 /// This class encrypts messages using the one-time pad system
 class OtpEncoder extends Converter<String, String> {
